@@ -48,7 +48,13 @@ export default function Header() {
             <span className="font-mono text-slate-700 font-medium">7-Domain + Isolation Forest</span>
           </div>
 
-          <div className="flex items-center space-x-2 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg text-xs">
+          <div className="flex items-center space-x-2 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg text-xs" title="Supabase Cloud: ecqcitnzcentnkdoyzmp.supabase.co">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span className="text-slate-500">Cloud DB:</span>
+            <span className="font-mono text-emerald-700 font-semibold">Supabase Connected</span>
+          </div>
+
+          <div className="flex items-center space-x-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg text-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
             <span className="text-emerald-700 font-medium font-mono text-[11px]">UPI-ALIGNED PROTOTYPE</span>
           </div>

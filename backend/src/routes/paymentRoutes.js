@@ -9,11 +9,13 @@ import {
   getDelayedHoldsHandler,
   scheduleDelayedHoldHandler,
   cancelDelayedHoldHandler,
-  releaseDelayedHoldHandler
+  releaseDelayedHoldHandler,
+  getSupabaseStatusHandler
 } from '../controllers/paymentController.js';
 
 const router = express.Router();
 
+router.get('/supabase-status', getSupabaseStatusHandler);
 router.post('/inspect', inspectPaymentHandler);
 router.post('/execute', executePaymentHandler);
 router.get('/presets', getPresetsHandler);

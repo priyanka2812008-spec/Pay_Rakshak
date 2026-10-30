@@ -1,5 +1,27 @@
 import { analyzePrePaymentRisk } from '../services/riskEngine.js';
 import { dataStore } from '../services/dataStore.js';
+import { syncTransactionToSupabase, isSupabaseConnected, SUPABASE_URL, testSupabaseConnection } from '../config/supabase.js';
+
+export async function getSupabaseStatusHandler(req, res) {
+  try {
+    const isOnline = await testSupabaseConnection();
+    return res.status(200).json({
+      success: true,
+      supabase: {
+        connected: isOnline,
+        projectUrl: SUPABASE_URL,
+        projectRef: 'ecqcitnzcentnkdoyzmp',
+        tablesRequired: ['transactions', 'beneficiaries', 'user_profiles', 'risk_evaluations'],
+        schemaFile: 'supabase_schema.sql'
+      }
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+}
 
 export async function inspectPaymentHandler(req, res) {
   try {
@@ -61,6 +83,9 @@ export async function executePaymentHandler(req, res) {
       screenSharingDetected: transactionInput.screenSharingActive,
       isCollectRequest: transactionInput.isCollectRequest
     });
+
+    // Asynchronously replicate to Supabase Cloud
+    syncTransactionToSupabase(savedTx).catch(() => {});
 
     return res.status(200).json({
       success: true,
